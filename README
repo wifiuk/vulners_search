@@ -1,2 +1,7 @@
 
 pip install vulners
+
+pip install json
+
+
+pip install pprint
