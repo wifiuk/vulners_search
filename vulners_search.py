@@ -1,7 +1,21 @@
+#!/usr/bin/env python
 ## Text menu in Python
 import vulners
+import json
+import pprint
+
 vulners_api = vulners.Vulners()
 
+title = ("""\
+
+                     ___  __   __       __   ___       __   __       
+\  / |  | |    |\ | |__  |__) /__`     /__` |__   /\  |__) /  ` |__| 
+ \/  \__/ |___ | \| |___ |  \ .__/ ___ .__/ |___ /~~\ |  \ \__, |  | 
+                                                                     
+"""
+)
+
+print title
 def print_menu():       ## Your menu design here
     print 30 * "-" , "MENU" , 30 * "-"
     print "1. Database Search"
@@ -41,7 +55,12 @@ while loop:          ## While loop which will keep going until loop = False
 	results = vulners_api.softwareVulnerabilities(filename, filename2)
 	exploit_list = results.get('exploit')
 	vulnerabilities_list = [results.get(key) for key in results if key not in ['info', 'blog', 'bugbounty']]
-	print  exploit_list
+	print json.dumps(vulnerabilities_list, sort_keys=True, indent=4)
+	pp = pprint.PrettyPrinter(indent=4)
+	pp.pprint(vulnerabilities_list)
+	exploitout = open('exploitout.txt', 'w')
+	print >> exploitout, 'Output:', vulnerabilities_list
+	exploitout.close()
     elif choice==5:
         print "Menu 5 has been selected"
         ## You can add your code or functions here
